@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SheStitch – Empowering Women Tailors</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+body {
+  background: linear-gradient(135deg, #fde2e4, #e0c3fc, #fef6e4);
+  background-attachment: fixed;
+}
+.card {
+  background: rgba(255,255,255,0.96);
+  border-radius: 1rem;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+.step.active {
+  color: #7c3aed;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- INTRO ANIMATION -->
+<section id="intro" class="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-purple-600 to-pink-500 text-white z-50">
+  <div class="text-6xl animate-bounce mb-3">🧵</div>
+  <h1 class="text-6xl font-extrabold animate-pulse">SheStitch</h1>
+  <p class="mt-3 italic text-lg text-center">
+    Empowering Women, One Stitch at a Time
+  </p>
+</section>
+
+<!-- HEADER -->
+<header class="bg-white/80 backdrop-blur-md px-6 py-4 flex justify-between items-center sticky top-0 shadow z-40">
+  <div class="flex items-center gap-2 text-purple-700 font-bold text-xl">
+    <i data-lucide="scissors"></i> SheStitch
+  </div>
+  <nav class="flex gap-4 text-purple-700">
+    <button onclick="showPage('home')"><i data-lucide="home"></i></button>
+    <button onclick="showPage('orders')"><i data-lucide="package"></i></button>
+    <button onclick="showPage('track')"><i data-lucide="truck"></i></button>
+    <button onclick="showPage('returns')"><i data-lucide="rotate-ccw"></i></button>
+  </nav>
+</header>
+
+<!-- BACK -->
+<div class="px-6 py-3">
+  <button onclick="goBack()" class="flex items-center gap-2 text-purple-600 font-semibold">
+    <i data-lucide="arrow-left"></i> Back
+  </button>
+</div>
+
+<!-- HOME -->
+<section id="home" class="page text-center px-6 py-12">
+  <h2 class="text-4xl font-bold text-purple-800 mb-4">
+    Designed by You. Crafted by Her.
+  </h2>
+  <p class="text-gray-700 max-w-xl mx-auto mb-8">
+    AI-assisted tailoring platform connecting customers with women tailors working from home.
+  </p>
+  <button onclick="showPage('customize')" class="bg-purple-600 text-white px-10 py-3 rounded-full text-lg">
+    Start Custom Order
+  </button>
+</section>
+
+<!-- CUSTOMIZE -->
+<section id="customize" class="page hidden max-w-xl mx-auto px-6 py-10">
+  <div class="card p-6">
+    <h3 class="text-xl font-bold text-purple-700 mb-4">Order Customization</h3>
+
+    <input id="custName" placeholder="Full Name *" class="border p-2 w-full mb-3 rounded">
+    <input id="phone" placeholder="Phone Number *" class="border p-2 w-full mb-3 rounded">
+    <textarea id="address" placeholder="Delivery Address *" class="border p-2 w-full mb-4 rounded"></textarea>
+
+    <div class="grid grid-cols-2 gap-2 mb-3">
+      <input id="bust" placeholder="Bust (in)" class="border p-2 rounded">
+      <input id="waist" placeholder="Waist (in)" class="border p-2 rounded">
+      <input id="hip" placeholder="Hip (in)" class="border p-2 rounded">
+      <input id="length" placeholder="Length (in)" class="border p-2 rounded">
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 mb-3">
+      <select id="fabric" class="border p-2 rounded">
+        <option value="">Fabric</option>
+        <option>Cotton</option>
+        <option>Silk</option>
+        <option>Chiffon</option>
+      </select>
+      <select id="style" class="border p-2 rounded">
+        <option value="">Style</option>
+        <option>Casual</option>
+        <option>Traditional</option>
+        <option>Fusion</option>
+      </select>
+      <select id="occasion" class="border p-2 rounded">
+        <option value="">Occasion</option>
+        <option>Casual</option>
+        <option>Party</option>
+        <option>Wedding</option>
+      </select>
+      <select id="complexity" class="border p-2 rounded">
+        <option value="">Design Complexity</option>
+        <option>Simple</option>
+        <option>Medium</option>
+        <option>Heavy Embroidery</option>
+      </select>
+    </div>
+
+    <!-- AI -->
+    <button onclick="generateAIDesign()" class="w-full bg-indigo-500 text-white py-2 rounded mb-3">
+      🤖 Get AI Design Suggestion
+    </button>
+    <div id="aiDesignBox" class="hidden bg-indigo-50 p-3 rounded text-sm mb-3"></div>
+
+    <!-- TAILOR SHOWCASE -->
+    <button onclick="showPage('tailor')" class="w-full bg-pink-500 text-white py-2 rounded mb-3">
+      👗 View Tailor’s Previous Work
+    </button>
+
+    <button onclick="placeOrder()" class="w-full bg-purple-600 text-white py-2 rounded">
+      Place Order
+    </button>
+  </div>
+</section>
+
+<!-- TAILOR WORK -->
+<section id="tailor" class="page hidden max-w-3xl mx-auto p-6 card">
+  <h3 class="text-2xl font-bold text-purple-700 mb-4">Tailor Work Showcase</h3>
+  <p class="mb-4 text-gray-600">
+    Selected works by home-based women tailors.
+  </p>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    <div class="border p-2 rounded">🌸 Casual Kurti<br><small>Cotton • Simple</small></div>
+    <div class="border p-2 rounded">✨ Party Wear<br><small>Silk • Medium</small></div>
+    <div class="border p-2 rounded">👰 Wedding Suit<br><small>Chiffon • Heavy</small></div>
+    <div class="border p-2 rounded">🌿 Office Wear<br><small>Linen • Simple</small></div>
+    <div class="border p-2 rounded">🎨 Fusion Dress<br><small>Silk • Medium</small></div>
+  </div>
+</section>
+
+<!-- SUCCESS -->
+<div id="successPopup" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div class="card p-8 text-center animate-pulse">
+    <h2 class="text-3xl font-bold text-green-600">🎉 YAYY!</h2>
+    <p class="mt-2 text-lg">YOUR ORDER HAS BEEN PLACED</p>
+    <button onclick="goToPayment()" class="mt-4 bg-purple-600 text-white px-6 py-2 rounded">
+      Proceed to Payment
+    </button>
+  </div>
+</div>
+
+<!-- PAYMENT -->
+<section id="payment" class="page hidden max-w-sm mx-auto p-6 card">
+  <h3 class="text-xl font-bold text-purple-700 mb-3">Advance Payment</h3>
+  <p>Advance (30%): ₹<strong id="advanceAmount"></strong></p>
+  <button onclick="confirmPayment()" class="mt-4 bg-green-600 text-white w-full py-2 rounded">
+    Pay Now
+  </button>
+</section>
+
+<!-- TRACK -->
+<section id="track" class="page hidden max-w-xl mx-auto p-6 card">
+  <h3 class="text-2xl font-bold text-purple-700 mb-4">Track Your Order</h3>
+  <ul class="space-y-2">
+    <li class="step active">✔ Order Confirmed</li>
+    <li class="step">🧵 Fabric Purchased</li>
+    <li class="step">✂ Stitching in Progress</li>
+    <li class="step">🔍 Quality Check</li>
+    <li class="step">🚚 Out for Delivery</li>
+    <li class="step">📦 Delivered</li>
+  </ul>
+  <p class="mt-4"><strong>Expected Delivery:</strong> <span id="deliveryDate"></span></p>
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="page hidden max-w-xl mx-auto p-6 card">
+  <h3 class="text-2xl font-bold text-purple-700 mb-4">My Order</h3>
+  <div id="orderDetails"></div>
+</section>
+
+<!-- RETURNS -->
+<section id="returns" class="page hidden max-w-sm mx-auto p-6 card">
+  <h3 class="text-xl font-bold text-purple-700 mb-3">Return Outfit</h3>
+  <select class="border p-2 w-full mb-3 rounded">
+    <option>Size Issue</option>
+    <option>Design Issue</option>
+    <option>Fabric Issue</option>
+  </select>
+  <button class="bg-red-500 text-white w-full py-2 rounded">
+    Submit Return Request
+  </button>
+</section>
+
+<script>
+lucide.createIcons();
+let historyStack=[], orderData={};
+
+setTimeout(()=>intro.style.display="none",2500);
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  historyStack.push(id);
+}
+function goBack(){
+  historyStack.pop();
+  showPage(historyStack.pop()||'home');
+}
+
+function generateAIDesign(){
+  aiDesignBox.innerHTML = `
+    <strong>AI Fit & Quality Suggestion:</strong><br>
+    Outfit: ${occasion.value==="Wedding"?"Anarkali Suit":"Designer Kurti"}<br>
+    Fit Score: 92%<br>
+    Quality Confidence: High<br>
+    <em>Explainable AI recommendation</em>
+  `;
+  aiDesignBox.classList.remove('hidden');
+}
+
+function placeOrder(){
+  if(!custName.value||!phone.value||!address.value){
+    alert("Please fill all required details"); return;
+  }
+  orderData={
+    name:custName.value,
+    phone:phone.value,
+    address:address.value,
+    total:1800,
+    advance:540
+  };
+  advanceAmount.innerText=orderData.advance;
+  successPopup.classList.remove('hidden');
+}
+
+function goToPayment(){
+  successPopup.classList.add('hidden');
+  showPage('payment');
+}
+
+function confirmPayment(){
+  const d=new Date(); d.setDate(d.getDate()+12);
+  deliveryDate.innerText=d.toDateString();
+  orderDetails.innerHTML=`
+    <p><strong>Name:</strong> ${orderData.name}</p>
+    <p><strong>Phone:</strong> ${orderData.phone}</p>
+    <p><strong>Address:</strong> ${orderData.address}</p>
+    <p><strong>Total:</strong> ₹${orderData.total}</p>
+  `;
+  showPage('orders');
+}
+
+showPage('home');
+</script>
+
+</body>
+</html>
